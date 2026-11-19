@@ -71,6 +71,10 @@ const nextConfig: NextConfig = {
 	// import.meta.url resolution inside .next/dev chunks — the live smoke
 	// caught it; unit tests run unbundled and never see it.
 	outputFileTracingIncludes: {
+		"/api/tts/kokoro": [
+			"node_modules/sherpa-onnx-node/**/*",
+			"node_modules/sherpa-onnx-win-*/**/*",
+		],
 		"*": [
 			// The standalone trace omitted this entire runtime-imported directory
 			// in 0.3.0, so importing puppeteer-core failed before browser startup.
@@ -121,6 +125,7 @@ const nextConfig: NextConfig = {
 		"@napi-rs/canvas", // native binding — bundling breaks the .node require
 		"@silvia-odwyer/photon-node", // CJS loads its adjacent WASM from disk
 		"@resvg/resvg-js", // native binding — same
+		"sherpa-onnx-node",
 	],
 };
 

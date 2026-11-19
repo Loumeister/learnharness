@@ -80,6 +80,7 @@ import type { PluginQuestionDraft } from "./session-core";
 import { SessionFind } from "@/components/session-find";
 import { SessionMessageNavigation } from "@/components/session-navigation";
 import { SelectionToolbar } from "@/components/selection-toolbar";
+import { useSelectionSpeech } from "@/components/use-selection-speech";
 import { createCiteAction, type CitationEditTarget } from "@/components/citation-actions";
 import { CitationActionsContext, type CitationActions } from "@/components/citation-chip";
 import { CitationCommentPopover } from "@/components/citation-comment-popover";
@@ -1053,7 +1054,8 @@ export function Chat({
 	}, [toggleQuestionThread]);
 	// Advancing the lesson does not close or disable an old conversation.
 	const sideActions = useMemo(() => createSideQuestionActions({ open: openSideThread }), [openSideThread]);
-	const selectionActions = useMemo(() => [citeAction, ...sideActions], [citeAction, sideActions]);
+	const speech = useSelectionSpeech();
+	const selectionActions = useMemo(() => [citeAction, ...sideActions, speech.action], [citeAction, sideActions, speech.action]);
 	const router = useRouter();
 	const transcriptElementRef = useRef<HTMLElement | null>(null);
 	transcriptElementRef.current = transcriptElement;
@@ -2202,6 +2204,8 @@ export function Chat({
 				)}
 				{planOpen && <PlanPopup messages={messages} onClose={() => setPlanOpen(false)} />}
 				<SelectionToolbar viewport={transcriptElement} actions={selectionActions} />
+				{speech.playing && <Button type="button" variant="outline" size="sm" className="pointer-events-auto fixed right-4 bottom-4 z-40 shadow-md" onClick={speech.stop}>Stop reading</Button>}
+				{speech.error && <p role="alert" className="fixed right-4 bottom-4 z-40 max-w-xs rounded-md border bg-popover px-3 py-2 text-sm text-destructive shadow-md">{speech.error}</p>}
 				{citationEdit && (
 					<CitationCommentPopover
 						key={`${citationEdit.start}:${citationEdit.link}`}
