@@ -33,6 +33,14 @@ Sessions are saved locally, including earlier messages when context is compacted
 
 Audio streams from your browser directly to Deepgram using a short-lived token. A `403 Insufficient permissions` error while obtaining that token can mean the key's role is insufficient.
 
+## Listen to Mandarin
+
+On the Windows desktop app, select a Chinese word or short sentence in the lesson, then choose **Read aloud**. Use **Stop reading** to interrupt playback.
+
+The first-time setup is a local model download. Download the [147 MB Kokoro INT8 archive](https://github.com/k2-fsa/sherpa-onnx/releases/download/tts-models/kokoro-int8-multi-lang-v1_1.tar.bz2) from sherpa-onnx and extract its `kokoro-int8-multi-lang-v1_1` folder into `%APPDATA%\LearnHarness\data`. The expected SHA-256 is `259c9c8bc906d6078e4e0570421885dabb68b539c2f970fcbb890a58eeaf3e9c`. Playback uses the extracted model on your PC.
+
+The model is [Kokoro v1.1-zh by Hexgrad](https://huggingface.co/hexgrad/Kokoro-82M-v1.1-zh), packaged by [sherpa-onnx](https://k2-fsa.github.io/sherpa/onnx/tts/all/Chinese-English/kokoro-multi-lang-v1_1.html).
+
 ## Use local files in a session
 
 In the desktop app, use the paperclip's **Files** or **Folder** choice, or drag files/folders into the content area, to insert their local paths. Files supports any file type and multiple selections; Folder attaches one directory path, including an empty folder, without expanding or reading its contents. Newly picked or dropped known folders get a trailing directory separator so their Folder icon survives saved messages and reloads; files stay unchanged. Older unmarked paths are not retrospectively classified. The agent can then locate/read supported content on the machine running LearnHarness under the existing file-access guards; attaching a path does not grant permissions. This is **not an upload**: originals stay where they are. Ordinary browsers cannot expose these local paths through the picker or drag-and-drop; you can paste a full path instead.
